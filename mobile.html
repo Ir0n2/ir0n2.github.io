@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+
+background-image: url(https://as1.ftcdn.net/v2/jpg/00/45/28/86/1000_F_45288644_lqGSHY5lUMeZCB9hhRyoh6veEvkC0mVb.jpg); 
+
+}
+
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
+</style>
+</head>
+<body>
+
+	<center><iframe id="videobox" width="1300px" height="720px" src="https://v2.vidsrc.me/embed/tt4158110/" title="VideoBox"></iframe></center>
+
+
+	<center><a href="ir0n2.github.io"><h1 style="color: white; border-style: solid; border-color: red; background-color: red; width: 300px;">ZeroCool Tv</h1></a></center>
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." style="border-style: solid;" title="Type in a name">
+
+<ul id="myUL" style="border-style: solid;">
+        <li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt0436992/');">Doctor Who</a></li>
+        <li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt2861424/');">Rick And Morty</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt1586680/');">Shameless</a></li>
+	<li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt8111088/');">Mandolorian</a></li>
+        <li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt0903747/');">Breaking Bad</a></li>
+        <li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt8531222/');">Dave</a></li>
+        <li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt0460649/');">How I met your mother</a></li>
+        <li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt1439629/');">Community</a></li>
+        <li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt1190634/');">The Boys</a></li>
+        <li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt0290988/');">Trailer park boys</a></li>
+        <li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt0472954/');">It's always sunny in philadelphia</a></li>
+        <li><a onclick="changeSrc('https://v2.vidsrc.me/embed/tt4158110/');">Mr Robot</a></li>
+        <li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt0182576/');">Family Guy</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt0165598/');">That 70s show</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt1520211/');">The Walking Dead</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt7908628/');">What We Do In The Shadows</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt0121955/');">South Park</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt7631058/');">rings of power</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt0098904/');">Seinfeld</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt0056751/');">Doctor Who (1960s)</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.me/embed/tt0106179/');">X-files</a></li>	
+	<li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt2575988/');">Silicon Valley</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt3743822/');">Fear the walking dead</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt3398228/');">BoJack HorseMan</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.xyz/embed/tt5884792');">Disjointed</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.net/embed/tt0098904/')">Seinfeld</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.net/embed/tt1710308/')">Regular Show</a></li>
+	<li><a onclick="changeSrc('https://vidsrc.net/embed/tt1305826/')">Adventure Time</a></li>
+
+	
+</ul>
+
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+function changeSrc(link) {
+
+	document.getElementById("videobox").src = link;
+
+	var Link = document.getElementById('FullButton');
+	
+	Link.setAttribute('href', link);
+
+	window.scrollTo(0, 0);
+
+	}
+
+</script>
+
+</body>
+</html>
