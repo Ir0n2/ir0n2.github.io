@@ -66,6 +66,19 @@
   font-family: monospace;
   z-index: 999;
 }
+#ghostLink {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px; /* Or however big you want it */
+  height: 100px;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  text-decoration: none;
+  color: transparent;
+  background: transparent;
+  border: none;
+}
 
   </style>
 </head>
@@ -83,7 +96,7 @@
   </div>
 
   <div id="timer">🥚 Best Before: 05:00</div>
-
+  <a href="https://ir0n2.github.io/snake.html" id="ghostLink">.</a>
   <div id="output">Click the egg to crack reality.</div>
 
   <script>
