@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eggs in the Void</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle, #111 0%, #000 100%);
+      font-family: 'Courier New', Courier, monospace;
+      color: #fceabb;
+      overflow: hidden;
+    }
+
+    #egg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      width: 200px;
+      height: 260px;
+      background: url('https://upload.wikimedia.org/wikipedia/en/5/58/Instagram_egg.jpg') no-repeat center/contain;
+      animation: spin 10s linear infinite;
+      cursor: url('https://cur.cursors-4u.net/food/foo-2/foo151.cur'), auto;
+    }
+
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    #output {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    #chicken {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    #chicken:hover::after {
+      content: ' 🐔 CLUCK';
+      color: #f8d49d;
+      margin-left: 10px;
+    }
+
+    #timer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #d4c544;
+  font-family: monospace;
+  z-index: 999;
+}
+
+  </style>
+</head>
+<body>
+  <div id="egg"></div>
+  <div id="chicken">
+	<!-- Geekring widget #3 - 88x31 px banner by wirlaburla -->
+    <map name="badge-geekring">
+        <area shape="rect" coords="4,3,13,28" href="http://geekring.net/site/NUMBER/previous" alt="Previous">
+        <area shape="rect" coords="13,3,22,28" href="http://geekring.net/site/NUMBER/random" alt="Random">
+        <area shape="rect" coords="76,3,84,28" href="http://geekring.net/site/NUMBER/next" alt="Next">
+        <area shape="rect" coords="23,3,63,28" href="https://geekring.net/" alt="Geekring">
+   </map>
+  <img usemap="#badge-geekring" src="http://geekring.net/banner/geek_2.gif" alt="The Geekring">
+  </div>
+
+  <div id="timer">🥚 Best Before: 05:00</div>
+
+  <div id="output">Click the egg to crack reality.</div>
+
+  <script>
+    const egg = document.getElementById('egg');
+    const output = document.getElementById('output');
+    const weirdOutputs = [
+      "You are now a yolk philosopher.",
+      "The raccoon stirs the batter again.",
+      "Your syrup destiny awaits.",
+      "01100100 01101111 01101110\'\'\'01110100 01100110 01101100 01101001 01110000 00100001",
+      "Breakfast is... forever.",
+      "An omelet remembers your name.",
+      "Butter!"
+    ];
+
+    egg.addEventListener('click', () => {
+      const msg = weirdOutputs[Math.floor(Math.random() * weirdOutputs.length)];
+      output.textContent = msg;
+    });
+
+    let butterMode = false;
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'b' || e.key.toLowerCase() === 'u' || e.key.toLowerCase() === 't' || e.key.toLowerCase() === 'e' || e.key.toLowerCase() === 'r') {
+        if (!butterMode) {
+          butterMode = true;
+          const butter = document.createElement('div');
+          butter.textContent = '🧈 AAAAAAA!';
+          butter.style.position = 'fixed';
+          butter.style.top = '40%';
+          butter.style.left = '-200px';
+          butter.style.fontSize = '4rem';
+          butter.style.animation = 'slide 5s linear forwards';
+          document.body.appendChild(butter);
+
+          const style = document.createElement('style');
+          style.textContent = `
+            @keyframes slide {
+              0% { left: -200px; }
+              100% { left: 120vw; }
+            }
+          `;
+          document.head.appendChild(style);
+
+          setTimeout(() => butter.remove(), 6000);
+          setTimeout(() => { butterMode = false }, 7000);
+        }
+      }
+    });
+
+    let fryingDone = false;
+
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'p' && !fryingDone) {
+    fryingDone = true;
+
+    // URLs for the images (replace with your own if needed)
+    const panImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Frying_pan.jpeg/960px-Frying_pan.jpeg';
+    const fryingImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Two_fried_eggs.jpg/250px-Two_fried_eggs.jpg';
+    const friedImg = 'https://t3.ftcdn.net/jpg/02/31/59/16/360_F_231591695_IlhNTJwcvMkXwXTfQGEwuDpwJidmdA7m.jpg';
+
+    // Create and play sizzle sound
+    const sfx = new Audio('https://cdn.freesound.org/previews/440/440849_3655844-lq.mp3'); // frying sound
+    sfx.volume = 0.5;
+
+    egg.style.backgroundImage = `url('${panImg}')`;
+    setTimeout(() => {
+      egg.style.backgroundImage = `url('${fryingImg}')`;
+      sfx.play();
+    }, 1000);
+
+    setTimeout(() => {
+      egg.style.backgroundImage = `url('${friedImg}')`;
+      egg.style.animation = 'none'; // Stop spinning
+    }, 14000);
+  }
+});
+//darkmode here
+    const darkModeTimer = 300; // seconds
+let secondsLeft = darkModeTimer;
+
+const timerDiv = document.getElementById('timer');
+const interval = setInterval(() => {
+  secondsLeft--;
+  const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+  const secs = String(secondsLeft % 60).padStart(2, '0');
+  timerDiv.textContent = `🥚 Best Before: ${mins}:${secs}`;
+
+  if (secondsLeft <= 0) {
+    clearInterval(interval);
+    document.body.style.filter = 'grayscale(1) brightness(0.6) contrast(1.5)';
+    output.textContent = 'The yolk has turned...';
+    timerDiv.textContent = '🕳️ Best Before: EXPIRED';
+  }
+}, 1000);
+
+	
+  /*  // Dark mode creep after 5 minutes
+    setTimeout(() => {
+      document.body.style.filter = 'grayscale(1) brightness(0.6) contrast(1.5)';
+      output.textContent = 'The yolk has turned...'
+    }, 300000); // 5 minutes */
+  </script>
+</body>
+</html>
+
