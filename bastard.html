@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rory's Cursed Corner</title>
+  <style>
+    body {
+      background-image: url("https://www.filterforge.com/filters/584.jpg");
+      color: #00ff00;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+    }
+
+    #main {
+      background: rgba(0, 0, 0, 0.8);
+      border: 5px dashed magenta;
+      padding: 20px;
+      margin: 40px auto;
+      width: 400px;
+      box-shadow: 0 0 25px lime;
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: yellow;
+      text-shadow: 2px 2px red;
+    }
+
+    label {
+      color: cyan;
+    }
+
+    button {
+      background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
+      color: black;
+      font-weight: bold;
+      padding: 10px;
+      margin: 5px;
+      border: 2px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: black;
+      color: lime;
+      border: 2px solid lime;
+    }
+
+    img {
+      border: 3px ridge white;
+    }
+
+    marquee {
+      color: hotpink;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    ::selection {
+      background: lime;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <marquee behavior="scroll" direction="left">Welcome to Rory's Cursed Corner — Now Featuring the Internet's Weirdest Pics!</marquee>
+
+  <div id="main">
+    <h1>Random Cursed Image (JS Only)</h1>
+
+    <img id="redditImage" src="" width="250" height="300" /><br><br>
+
+    <label for="limitInput">How many Reddit posts to scrape:</label><br>
+    <input id="limitInput" type="number" min="1" max="100" value="25" /><br><br>
+
+    <input type="checkbox" id="noRepeatsCheckbox" checked />
+    <label for="noRepeatsCheckbox">Avoid repeats</label><br><br>
+
+    <button onclick="loadRandomImage()">Get New Image</button>
+    <button onclick="usedIndices.clear(); alert('Repeat tracker reset!');">Reset Tracker</button>
+  </div>
+
+  <script>
+    const subreddit = "cursedimages";
+    const usedIndices = new Set();
+
+    async function fetchRedditImages(limit) {
+      const url = `https://www.reddit.com/r/${subreddit}/top.json?limit=${limit}&t=all`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const posts = data.data.children;
+      const imageUrls = posts
+        .map(post => post.data.url)
+        .filter(url => /\.(jpg|jpeg|png)$/i.test(url));
+
+      return imageUrls;
+    }
+
+    async function loadRandomImage() {
+      const limit = parseInt(document.getElementById("limitInput").value) || 25;
+      const avoidRepeats = document.getElementById("noRepeatsCheckbox").checked;
+
+      const images = await fetchRedditImages(limit);
+      if (images.length === 0) {
+        alert("No images found.");
+        return;
+      }
+
+      let idx;
+      if (avoidRepeats && usedIndices.size < images.length) {
+        do {
+          idx = Math.floor(Math.random() * images.length);
+        } while (usedIndices.has(idx));
+        usedIndices.add(idx);
+      } else {
+        idx = Math.floor(Math.random() * images.length);
+      }
+
+      document.getElementById("redditImage").src = images[idx];
+    }
+
+    loadRandomImage();
+  </script>
+</body>
+</html>
+
