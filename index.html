@@ -1,0 +1,230 @@
+<head>
+<style>
+html, body{
+	-webkit-font-smoothing:antialiased;
+	font-family: "Comic Sans MS", sans-serif;
+	line-height:1.4;
+	margin:0 auto;
+	max-width:860px;
+	height: 100%;
+}
+.center{
+	text-align: center;
+}
+.intro{
+	font-size:4em;
+}
+.max { 
+    display: block;
+    width: 860px;
+    word-wrap: break-word;
+}
+.bg1{
+	background-image: url("https://i.imgur.com/YUPql5N.gif");
+}
+.bg2{
+	background-image: url("https://i.imgur.com/SHZe50s.gif");
+}
+a{
+	color: #000000;
+}
+#wm-ipp #wm-ipp-inside {
+  margin: 0 6px;
+  border:5px solid #000;
+  border-top:none;
+  background-color:rgba(255,255,255,0.9);
+  -moz-box-shadow:1px 1px 4px #333;
+  -webkit-box-shadow:1px 1px 4px #333;
+  box-shadow:1px 1px 4px #333;
+  border-radius:0 0 8px 8px;
+}
+.container {
+    width: 1000px;
+    height: 100%;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+h1, h2, h3, p, a {
+  color: yellow;
+}
+span.line{
+  color: red;
+}
+.cursor{
+    cursor: url(https://i.imgur.com/RUE567I.gif), auto;
+}
+
+/* @group Blink */
+.blink {
+	-webkit-animation: blink .75s linear infinite;
+	-moz-animation: blink .75s linear infinite;
+	-ms-animation: blink .75s linear infinite;
+	-o-animation: blink .75s linear infinite;
+	 animation: blink .75s linear infinite;
+}
+@-webkit-keyframes blink {
+	0% { opacity: 1; }
+	50% { opacity: 1; }
+	50.01% { opacity: 0; }
+	100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+	0% { opacity: 1; }
+	50% { opacity: 1; }
+	50.01% { opacity: 0; }
+	100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+	0% { opacity: 1; }
+	50% { opacity: 1; }
+	50.01% { opacity: 0; }
+	100% { opacity: 0; }
+}
+@-o-keyframes blink {
+	0% { opacity: 1; }
+	50% { opacity: 1; }
+	50.01% { opacity: 0; }
+	100% { opacity: 0; }
+}
+@keyframes blink {
+	0% { opacity: 1; }
+	50% { opacity: 1; }
+	50.01% { opacity: 0; }
+	100% { opacity: 0; }
+}
+/* @end */
+
+/*for footer*/
+#main{
+	min-height: 90vh;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  background-image: url("https://i.imgur.com/YUPql5N.gif");
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  border-style: solid;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.RoryFlix {
+  float: left;
+  border: 1px dotted black;
+  margin: 0px 0px 15px 20px;
+}
+
+.penis {
+  background-image: url("https://i.imgur.com/YUPql5N.gif");
+  border-style: double;
+  border-color: yellow;
+  padding: 5px;
+}
+
+</style>
+
+<script>
+    async function showDeviceInfo() {
+      let ip = 'Loading...';
+      try {
+        const res = await fetch('https://api.ipify.org?format=json');
+        const data = await res.json();
+        ip = data.ip;
+      } catch (e) {
+        ip = 'Could not fetch IP';
+      }
+
+      const info = `
+🖥️ User Agent: ${navigator.userAgent}
+🪟 Platform: ${navigator.platform}
+🗣️ Language: ${navigator.language}
+🖼️ Screen Size: ${screen.width}x${screen.height}
+🪟 Window Size: ${window.innerWidth}x${window.innerHeight}
+🌐 IP Address: ${ip}
+      `;
+	alert(info);	
+      //document.getElementById("info").innerText = info;
+    }
+  </script>
+
+</head>
+<body class="center bg2 max">
+<div id="main">
+<h1 class="tab blink">Welcome to my website!</h1>
+<div id="home">
+<h4><a href="#home">Home</a> <span class="line">|</span>
+<a href="#about"onclick="showDeviceInfo()">About you</a> <span class="line">|</span>
+<div class="dropdown">
+<a href="#working">Weird Websites I Made</a> <span class="line">|</span>
+  <div class="dropdown-content">
+    <p><a href="ir0n2.github.io/snake.html">Snake<a/></p>
+    <p><a href="ir0n2.github.io/eggsinthevoid.html">Eggs In The Void<a/></p>
+    <p><a href="ir0n2.github.io/bastard.html">Cursed Images<a/></p>
+
+  </div>
+</div>
+<div class="dropdown">
+  <a href="#deeznutz">Stuff I Made</a>
+  <div class="dropdown-content">
+    <p><a href="https://github.com/Ir0n2/Watch_Dogs_tools">"Hacking" tools</a></p>
+    <p><a href="https://github.com/Ir0n2/GoManager">Password Manager</a></p>
+    <p><a href="https://github.com/Ir0n2/stockPriceChecker">StockPriceChecker</a></p>
+  </div>
+</div>
+
+</div>
+
+<img class="intro" id="about" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnp0Z2hzcTgwamJ0cHZyOWc0cmEwYmZrbXpiMGdienp2bjBtZjZpZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/37cSJPyBViZMc/giphy.gif">
+<h2>This is the base site for ir0n2.github.io</h2>
+<div id="penis" class="penis">
+<h2 id="working">Projects I am working on</h2>
+<p ><img class="RoryFlix" name="RoryFlix" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Letter_R_Red_on_Black_Background.png" alt="cat" style="height:100px; vertical-align:middle;"> RoryFlix: I am making a local web app to help users save video source urls from streaming websites to watch later before the orignal website is shut down. 
+</p>
+<p>
+You get the shows straight from the source and save them to a playlist. 
+</p>
+<p>
+In Canada, including Nova Scotia, simply saving a video stream URL to a text file is not inherently illegal. URLs themselves are not protected by copyright, and recording them for personal reference does not, by itself, constitute infringement. However, the legality of this action depends on the context and intended use.</p>
+</div>
+<h2 id="made">Stuff I made</h2>
+
+<p>Raspberry pi fm radio station</p>
+
+<img src="https://i.imgur.com/i6hvJjx.gif">
+
+<img src="https://archive.org/download/snapchat-1331909843/Snapchat-1331909843.jpg" alt="peepeepoopoo" style="width:400px;height:500px;"> 
+
+<img src="https://archive.org/download/snapchat-1331909843/Snapchat-1457295539.jpg" alt="peepeepoopoo" style="width:400px;height:500px;"> 
+
+<img src="https://i.imgur.com/i6hvJjx.gif">
+
+<p>rpi 4 pipboy cyberdeck</p>
+
+<img src="https://i.imgur.com/i6hvJjx.gif">
+
+<img src="https://archive.org/download/snapchat-1331909843/20250418_111837.jpg" alt="poopoo" style="width:400px;height:500px;">
+
+<img src="https://archive.org/download/snapchat-1331909843/20250418_112022.jpg" alt="poopoo" style="width:400px;height:500px;">
+
+
+</div>
+
+<footer id="footer">
+<img src="https://i.imgur.com/i6hvJjx.gif">
+
+<p>This is made with stolen code</p>
+<span><img height="100" width="100" src="https://images.steamusercontent.com/ugc/844841386259948801/F24BFB8F4F15A3C175CCFB67E2B0D7685094832B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"></span>
+</footer>
+</body>
