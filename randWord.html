@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Wordle Clone</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #121213;
+    color: white;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 { margin-bottom: 10px; }
+
+#mode-buttons button {
+    margin: 0 5px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background: #3a3a3c;
+    color: white;
+}
+
+#mode-buttons button.active {
+    background: #538d4e;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    gap: 5px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.tile {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #3a3a3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.correct { background: #538d4e; border: none; }
+.present { background: #b59f3b; border: none; }
+.absent  { background: #3a3a3c; border: none; }
+
+#keyboard {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    gap: 5px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    background: #818384;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: default;
+}
+
+.key.correct { background: #538d4e; }
+.key.present { background: #b59f3b; }
+.key.absent  { background: #3a3a3c; }
+
+#controls input {
+    padding: 8px;
+    font-size: 1rem;
+    text-transform: lowercase;
+}
+#controls button {
+    padding: 8px 15px;
+    font-size: 1rem;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#giveup-btn {
+    padding: 8px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background: #3a3a3c;   /* same as guess button */
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;       /* important! same as guess button */
+}
+
+#giveup-container button:hover {
+    background: #5a5a5a; /* optional hover effect like guess button */
+}
+
+#infoModal {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.85);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index: 1000;
+}
+
+#infoContent {
+    background: #1e1e1e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+#infoContent h2 { margin-top:0; }
+#infoContent button {
+    margin-top: 15px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    border:none;
+    border-radius:5px;
+    background:#3a3a3c;
+    color:white;
+    cursor:pointer;
+}
+#infoContent button:hover {
+    background:#5a5a5a;
+}
+
+#infoModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 10px; /* ensures spacing on small screens */
+    overflow-y: auto; /* allows scrolling if content is too tall */
+}
+
+#infoContent {
+    background: #1e1e1e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;      /* full width up to max-width */
+    max-width: 500px;  /* caps modal width on larger screens */
+    text-align: left;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+
+@media(max-width:600px) {
+    #keyboard { grid-template-columns: repeat(7, 40px); }
+}
+</style>
+</head>
+<body>
+
+<h1>Ad Free Word Game</h1>
+
+<div id="mode-buttons">
+    <button id="btn-random" onclick="startRandomMode()">Random Mode</button>
+    <button id="btn-daily" onclick="startDailyMode()">Daily Mode</button>
+</div>
+
+<div id="board"></div>
+
+<div id="controls">
+    <input type="text" id="guessInput" maxlength="5" placeholder="Enter guess">
+    <button onclick="submitGuess()">Guess</button>
+</div>
+
+<div id="keyboard"></div>
+
+<div id="controls">
+    <button onclick="giveUp()">Give Up</button>
+</div>
+
+<div id="controls" style="margin: 10px 0;">
+    <button id="howItWorksBtn">How It Works</button>
+</div>
+
+<div id="infoModal" style="display:none;">
+    <div id="infoContent">
+	<center><h2>How This Generic Ad Free Word Game Works</h2></center>
+	<p>This game works like that <i>other word game</i>: guess the 5-letter word in 6 tries.</p>
+        <p>There are two modes:</p>
+        <ul>
+            <li><strong>Random Mode:</strong> a new word each game, selected randomly.</li>
+            <li><strong>Daily Mode:</strong> everyone gets the same daily word, deterministically, based on the day.</li>
+        </ul>
+	<center><img src="https://ia600808.us.archive.org/31/items/benderCommunist/SmartSelect_20260219_141839_Bazaart.jpg" alt="bender" width="150" height="160"></center> 
+
+	<p>The New York Times putting ads in Wordle is a clear example of <strong>enshittification</strong> — Which is when a digital platform is made worse for users, in order to increase profits, ruining the experience.</p>
+	<p>So I've made my own, seperate word game, with blackjack and hookers! And here we will be open source and for the people!</p>
+	
+	<button id="closeInfoBtn">Close</button>
+    </div>
+</div>
+
+
+<script>
+let wordList = [];
+let answer = "";
+let currentRow = 0;
+const maxRows = 6;
+let gameMode = "random";
+
+/* ===== Cookie Helpers ===== */
+function setCookie(name, value, hours) {
+    const d = new Date();
+    d.setTime(d.getTime() + (hours*60*60*1000));
+    document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
+}
+
+function getCookie(name) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+}
+
+/* ===== Load words.txt ===== */
+async function loadWords() {
+    const res = await fetch("words.txt");
+    const text = await res.text();
+    wordList = text.split("\n").map(w => w.trim().toLowerCase()).filter(w => w.length === 5);
+    startRandomMode(); // default
+}
+
+/* ===== Setup board ===== */
+const board = document.getElementById("board");
+for (let i = 0; i < maxRows*5; i++) {
+    const tile = document.createElement("div");
+    tile.classList.add("tile");
+    board.appendChild(tile);
+}
+
+/* ===== Setup keyboard ===== */
+const keyboard = document.getElementById("keyboard");
+const alphabet = "abcdefghijklmnopqrstuvwxyz";
+alphabet.split("").forEach(letter => {
+    const key = document.createElement("div");
+    key.classList.add("key");
+    key.id = "key-" + letter;
+    key.textContent = letter.toUpperCase();
+    keyboard.appendChild(key);
+});
+
+/* ===== Update key colors ===== */
+function updateKey(letter, status) {
+    const key = document.getElementById("key-" + letter);
+    if (!key) return;
+    if (key.classList.contains("correct")) return;
+
+    if (status === "correct") { key.classList.remove("present","absent"); key.classList.add("correct"); }
+    else if (status === "present") { if (!key.classList.contains("present")) key.classList.add("present"); }
+    else if (status === "absent") { if (!key.classList.contains("present")) key.classList.add("absent"); }
+}
+
+/* ===== Reset game ===== */
+function resetGame() {
+    currentRow = 0;
+    document.querySelectorAll(".tile").forEach(tile => { tile.textContent=""; tile.className="tile"; });
+    document.querySelectorAll(".key").forEach(key => key.className="key");
+    document.getElementById("guessInput").value = "";
+}
+
+/* ===== Game Modes ===== */
+function highlightMode() {
+    document.getElementById("btn-random").classList.toggle("active", gameMode==="random");
+    document.getElementById("btn-daily").classList.toggle("active", gameMode==="daily");
+}
+
+async function startRandomMode() {
+    resetGame();
+    gameMode = "random";
+    highlightMode();
+    answer = wordList[Math.floor(Math.random()*wordList.length)];
+}
+
+async function startDailyMode() {
+    resetGame();
+    gameMode = "daily";
+    highlightMode();
+
+    // check cookie first
+    const cookieName = "dailyWordDone";
+    const dailyIndex = Math.floor((new Date() - new Date(2024,0,1))/(1000*60*60*24)) % wordList.length;
+    const dailyWord = wordList[dailyIndex];
+
+    if (getCookie(cookieName) === dailyWord) {
+        alert("You've already solved today's daily word!");
+    }
+
+    answer = dailyWord;
+}
+
+/* ===== Submit guess ===== */
+function submitGuess() {
+    const input = document.getElementById("guessInput");
+    const guess = input.value.toLowerCase();
+    if (guess.length !== 5) { alert("Word must be 5 letters."); return; }
+    if (!wordList.includes(guess)) { alert("Word not in list."); return; }
+
+    const tiles = document.querySelectorAll(".tile");
+    for (let i=0;i<5;i++) {
+        const tile = tiles[currentRow*5+i];
+        tile.textContent = guess[i];
+        if (guess[i]===answer[i]) { tile.classList.add("correct"); updateKey(guess[i],"correct"); }
+        else if (answer.includes(guess[i])) { tile.classList.add("present"); updateKey(guess[i],"present"); }
+        else { tile.classList.add("absent"); updateKey(guess[i],"absent"); }
+    }
+
+    if (guess===answer) {
+        alert("You win!");
+        if (gameMode==="daily") {
+            setCookie("dailyWordDone", answer, 20); // expires in 20 hours
+        }
+        return;
+    }
+
+    currentRow++;
+    input.value = "";
+
+    if (currentRow===maxRows) alert("Game Over! The word was: " + answer);
+}
+
+const infoBtn = document.getElementById("howItWorksBtn");
+const infoModal = document.getElementById("infoModal");
+const closeInfoBtn = document.getElementById("closeInfoBtn");
+
+infoBtn.addEventListener("click", () => {
+    infoModal.style.display = "flex";
+});
+
+closeInfoBtn.addEventListener("click", () => {
+    infoModal.style.display = "none";
+});
+
+// optional: click outside content closes modal
+infoModal.addEventListener("click", (e) => {
+    if(e.target === infoModal) infoModal.style.display = "none";
+});
+
+
+/* ===== Give up button ===== */
+function giveUp() {
+    alert("The word was: " + answer);
+}
+
+/* ===== Initialize ===== */
+loadWords();
+</script>
+
+</body>
+</html>
+
