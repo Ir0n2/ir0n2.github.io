@@ -318,7 +318,7 @@ function submitGuess() {
     const input = document.getElementById("guessInput");
     const guess = input.value.toLowerCase();
     if (guess.length !== 5) { alert("Word must be 5 letters."); return; }
-    if (!wordList.includes(guess)) { alert("Word not in list."); return; }
+    //if (!wordList.includes(guess)) { alert("Word not in list."); return; }
 
     const tiles = document.querySelectorAll(".tile");
     for (let i=0;i<5;i++) {
